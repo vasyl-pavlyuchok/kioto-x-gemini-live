@@ -9,7 +9,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Layout, Monitor, Sparkles, Wand2 } from 'lucide-react';
 import { analyzeHtmlAndRecommendFrameworks, type AnalyzeHtmlOutput } from '@/ai/flows/analyze-html-recommend-frameworks';
 
-export default function CodeCasterPage() {
+export default function KiotoGeminiPage() {
   const [htmlContent, setHtmlContent] = useState<string>('');
   const [recommendations, setRecommendations] = useState<AnalyzeHtmlOutput | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -39,12 +39,12 @@ export default function CodeCasterPage() {
             <Layout className="h-6 w-6 text-white" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-primary font-headline">
-            Code Caster
+            Kioto × Gemini Live
           </h1>
         </div>
         <div className="hidden md:flex items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1"><Monitor className="h-4 w-4" /> Live Preview</span>
-          <span className="flex items-center gap-1"><Sparkles className="h-4 w-4" /> AI Recommendations</span>
+          <span className="flex items-center gap-1 text-accent"><Sparkles className="h-4 w-4" /> RetoIA Día 04</span>
         </div>
       </header>
 

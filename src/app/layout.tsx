@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Code Caster — Modern HTML Transport Tool',
+  title: 'Kioto × Gemini Live — RetoIA Día 04',
   description: 'Easily transport and analyze your HTML code with live previews and AI-driven framework recommendations.',
 };
 
