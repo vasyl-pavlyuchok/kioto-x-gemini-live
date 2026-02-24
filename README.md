@@ -1,18 +1,18 @@
 # Kioto × Gemini Live — RetoIA Día 04
 
-Este proyecto es una experiencia interactiva diseñada para el RetoIA Día 04. Utiliza Gemini Live para ayudar a los usuarios a sumergirse en la cultura de Kioto a través de cuatro desafíos:
+Esta aplicación es una experiencia inmersiva diseñada para el **RetoIA Día 04**. Utiliza las capacidades de visión y voz de **Gemini Live** para ayudar a los usuarios a navegar por situaciones cotidianas en Kioto, Japón.
 
-1. **Leer · Traducir**: Traducir un menú de restaurante japonés.
-2. **Hablar · Pedir**: Practicar el pedido de comida en japonés con reconocimiento de voz.
-3. **Escuchar · Entender**: Comprender anuncios de la estación de tren de Kioto.
-4. **Ver · Identificar**: Identificar lugares icónicos de la ciudad mediante imágenes.
+## Los 4 Retos
+1. **Leer · Traducir**: Escanea un menú tradicional de Kioto.
+2. **Hablar · Pedir**: Practica tu japonés pidiendo comida a chefs virtuales.
+3. **Escuchar · Entender**: Descifra anuncios de megafonía de la estación de tren de Kioto.
+4. **Ver · Identificar**: Pon a prueba tus conocimientos sobre monumentos icónicos de la ciudad.
 
-## Tecnologías
+## Tecnologías Utilizadas
+- **Next.js 15** (App Router)
+- **Genkit** para integraciones de IA
+- **Tailwind CSS** para el diseño visual
+- **Lucide React** para la iconografía
+- **ShadCN UI** para componentes de interfaz profesional
 
-- Next.js (App Router)
-- Tailwind CSS
-- Lucide React (Iconos)
-- Web Speech API (para simulaciones locales)
-- Gemini Live (vía integración externa del usuario)
-
-Desarrollado para el RetoIA por Vasyl Pavlyuchok.
+Desarrollado con ❤️ para la comunidad del RetoIA.
