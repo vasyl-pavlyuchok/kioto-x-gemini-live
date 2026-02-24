@@ -4,7 +4,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Kioto × Gemini Live — RetoIA Día 04',
-  description: 'Explora Kioto con Gemini Live: lee menús, escucha anuncios de trenes e identifica lugares icónicos en una experiencia interactiva.',
+  description: 'Explora Kioto con Gemini Live: lee menús, escucha anuncios de trenes e identifica lugares icónicos en una experiencia interactiva del RetoIA.',
 };
 
 export default function RootLayout({

@@ -153,7 +153,7 @@ export default function KiotoChallenge() {
       setAudioStatus('NAVEGADOR NO COMPATIBLE CON AUDIO')
       return
     }
-    const text = 'まもなく、のぞみ二十七号、新大阪行きが、五番線に参ります。危ないですので、黄色い線の内側にお下がりください。'
+    const text = 'まもなく、のぞみ二十七号、新大阪行きが、五番線に参ります. 危ないですので、黄色い線の内側にお下がりください。'
     const utter = new SpeechSynthesisUtterance(text)
     utter.lang = 'ja-JP'
     utter.rate = 0.85
@@ -265,7 +265,7 @@ export default function KiotoChallenge() {
               <div className="menu-title">本日のお献立</div>
               <div className="menu-item">
                 <span className="jp-name">湯豆腐</span>
-                <span className="jp-sub">冬の京都の定番料理</span>
+                <span className="jp-sub">冬の京都 de 定番料理</span>
                 <span className="price">¥ 1,200</span>
               </div>
               <div className="menu-item">
@@ -280,7 +280,7 @@ export default function KiotoChallenge() {
               </div>
               <div className="menu-item">
                 <span className="jp-name">京野菜の炊き合わせ</span>
-                <span className="jp-sub">季節 de 野菜を丁寧に煮込んだ</span>
+                <span className="jp-sub">季節の野菜を丁寧に煮込んだ</span>
                 <span className="price">¥ 1,800</span>
               </div>
             </div>
