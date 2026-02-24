@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kioto × Gemini Live — RetoIA Día 04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --beige: #fdf6ee;
+    --ink: #1a1008;
+    --red: #c0392b;
+    --gold: #b8861a;
+    --sage: #6b7c5c;
+    --muted: #8a7a6a;
+  }
+
+  body {
+    background: var(--beige);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Cherry blossom canvas */
+  #petal-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 1;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  .site-header {
+    text-align: center;
+    margin-bottom: 64px;
+    border-bottom: 1px solid rgba(192,57,43,0.2);
+    padding-bottom: 40px;
+  }
+
+  .day-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .site-header h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .site-header h1 .jp {
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 300;
+    color: var(--red);
+    display: block;
+    font-size: 0.7em;
+    margin-top: 8px;
+  }
+
+  .site-header p {
+    margin-top: 20px;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* Challenge sections */
+  .challenge {
+    margin-bottom: 56px;
+    border: 1px solid rgba(184,134,26,0.25);
+    border-radius: 2px;
+    overflow: hidden;
+    background: rgba(255,252,245,0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .challenge-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    border-bottom: 1px solid rgba(184,134,26,0.2);
+    background: rgba(184,134,26,0.04);
+  }
+
+  .challenge-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .challenge-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+
+  .challenge-title small {
+    display: block;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.85em;
+    margin-top: 2px;
+  }
+
+  .challenge-body {
+    padding: 28px;
+  }
+
+  .instruction {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  /* Menu card */
+  .menu-card {
+    background: white;
+    border: 1px solid rgba(184,134,26,0.3);
+    border-radius: 2px;
+    padding: 24px;
+    font-family: 'Noto Serif JP', serif;
+    margin-bottom: 20px;
+  }
+
+  .menu-title {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--red);
+    margin-bottom: 16px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    border-bottom: 1px solid rgba(192,57,43,0.2);
+    padding-bottom: 12px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(184,134,26,0.2);
+    gap: 16px;
+  }
+
+  .menu-item:last-child { border-bottom: none; }
+
+  .menu-item .jp-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .menu-item .jp-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 300;
+    flex: 1;
+    padding: 0 12px;
+  }
+
+  .menu-item .price {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* Station card — immersive train scene */
+  .station-card {
+    position: relative;
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+    margin-left: -28px;
+    margin-right: -28px;
+    cursor: pointer;
+    aspect-ratio: 4/3;
+    max-height: 420px;
+  }
+
+  .station-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .station-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+    transition: transform 0.6s ease;
+    filter: saturate(0.9) contrast(1.05);
+  }
+
+  .station-card:hover .station-img {
+    transform: scale(1.02);
+  }
+
+  /* Dark gradient overlay — bottom and top bars */
+  .station-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgba(10,6,2,0.82) 0%, rgba(10,6,2,0.2) 45%, transparent 70%),
+      linear-gradient(to bottom, rgba(10,6,2,0.55) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  /* HUD info at top */
+  .station-hud {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .station-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.35);
+    padding: 6px 12px;
+    border-radius: 2px;
+    backdrop-filter: blur(4px);
+  }
+
+  .station-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #e74c3c;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(231,76,60,0.8);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+
+  .station-dot.playing {
+    background: #2ecc71;
+    box-shadow: 0 0 6px rgba(46,204,113,0.9);
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .station-announcement {
+    text-align: right;
+  }
+
+  .ann-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .ann-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+  }
+
+  /* Play button — centered */
+  .station-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(192,57,43,0.85);
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    pointer-events: none;
+  }
+
+  .station-card:hover .station-play-btn {
+    background: rgba(192,57,43,1);
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  /* Status bar at bottom */
+  .station-status {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 14px 22px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* Image challenge */
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+    perspective: 1000px;
+  }
+
+  .img-option {
+    position: relative;
+    cursor: pointer;
+    border-radius: 2px;
+    overflow: visible;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.35s ease,
+                z-index 0s;
+    transform-origin: center center;
+  }
+
+  .img-option img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%) contrast(0.85) brightness(0.95);
+    transition: filter 0.4s ease;
+    border: 2px solid transparent;
+    border-radius: 2px;
+  }
+
+  .img-option.selected img {
+    filter: grayscale(0%) contrast(1) brightness(1);
+    border-color: var(--gold);
+  }
+
+  /* Bamboo — landscape image, match card height of others */
+  .img-option:first-child img {
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .img-option.selected {
+    transform: scale(1.5) translateZ(0);
+    z-index: 10;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+
+  .img-option:not(.selected):hover img {
+    filter: grayscale(60%) contrast(0.9);
+  }
+
+  .img-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+    color: rgba(255,255,255,0.0);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-align: center;
+    padding: 20px 8px 8px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    border-radius: 0 0 2px 2px;
+  }
+
+  .img-option.selected .img-label {
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Reveal button — original style */
+  .reveal-btn {
+    width: 100%;
+    background: none;
+    border: 1px solid rgba(26,16,8,0.15);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 0;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.6);
+  }
+
+  .reveal-btn:hover {
+    background: rgba(255,255,255,0.95);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+
+  .reveal-btn::before {
+    content: '▶';
+    font-size: 0.6em;
+    color: var(--red);
+  }
+
+  /* Answer reveal */
+  .answer-box {
+    display: none;
+    margin-top: 16px;
+    padding: 20px 24px;
+    border-left: 3px solid var(--gold);
+    background: rgba(184,134,26,0.06);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink);
+    animation: slideIn 0.3s ease;
+  }
+
+  .answer-box.visible { display: block; }
+
+  .answer-box strong {
+    color: var(--red);
+    font-size: 1.1em;
+  }
+
+  .answer-box .jp-answer {
+    font-family: 'Noto Serif JP', serif;
+    display: block;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 8px 0 4px;
+    font-weight: 300;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Footer */
+  .site-footer {
+    text-align: center;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(184,134,26,0.2);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  .site-footer > span {
+    color: var(--red);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.1em;
+    vertical-align: middle;
+  }
+
+  .signature {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sig-line {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(184,134,26,0.5), transparent);
+    margin-bottom: 4px;
+  }
+
+  .sig-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    font-weight: 300;
+  }
+
+  .sig-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .image-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .img-option.selected {
+      transform: scale(1.05);
+    }
+    .img-option:first-child img {
+      aspect-ratio: 16/9;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="petal-canvas"></canvas>
+
+<div class="page-wrap">
+
+  <!-- Header -->
+  <header class="site-header">
+    <span class="day-badge">RetoIA · Día 04</span>
+    <h1>
+      Kioto × Gemini Live
+      <span class="jp">京都 × ジェミニ ライブ</span>
+    </h1>
+    <p>Tres retos para poner a prueba tu fluidez con Gemini Live. Lee, escucha e identifica como un local.</p>
+  </header>
+
+  <!-- Challenge 1: Menu -->
+  <section class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-num">01</div>
+      <div class="challenge-title">
+        Lee el menú en voz alta
+        <small>Pídele a Gemini que traduzca y explique cada plato</small>
+      </div>
+    </div>
+    <div class="challenge-body">
+      <p class="instruction">Abre Gemini Live, muéstrale este menú y pídele que te lo lea y explique en español. ¿Cuántos platos puedes identificar correctamente?</p>
+      <div class="menu-card">
+        <div class="menu-title">本日のお献立 · Menú del día</div>
+        <div class="menu-item">
+          <span class="jp-name">湯豆腐</span>
+          <span class="jp-sub">冬の京都の定番料理</span>
+          <span class="price">¥ 1,200</span>
+        </div>
+        <div class="menu-item">
+          <span class="jp-name">鱧の天ぷら</span>
+          <span class="jp-sub">夏限定・揚げたて</span>
+          <span class="price">¥ 2,400</span>
+        </div>
+        <div class="menu-item">
+          <span class="jp-name">抹茶プリン</span>
+          <span class="jp-sub">宇治抹茶使用・手作り</span>
+          <span class="price">¥ 680</span>
+        </div>
+        <div class="menu-item">
+          <span class="jp-name">京野菜の炊き合わせ</span>
+          <span class="jp-sub">季節の野菜を丁寧に煮込んだ</span>
+          <span class="price">¥ 1,800</span>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleAnswer('ans1')">
+        Revelar después de que Gemini responda
+      </button>
+      <div id="ans1" class="answer-box">
+        <strong>湯豆腐</strong> (yu-dōfu) — Tofu caliente en caldo dashi, plato icónico de la cocina kaiseki de Kioto.<br><br>
+        <strong>鱧の天ぷら</strong> (hamo no tempura) — Anguila de mar rebozada, especialidad del verano en Kioto.<br><br>
+        <strong>抹茶プリン</strong> (matcha purin) — Flan cremoso de té verde matcha, un postre moderno muy popular.<br><br>
+        <strong>京野菜の炊き合わせ</strong> (kyōyasai no takiawase) — Verduras de Kioto cocinadas lentamente en caldo, plato de temporada.
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenge 2: Train Announcement -->
+  <section class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-num">02</div>
+      <div class="challenge-title">
+        Escucha el anuncio de la estación
+        <small>¿Qué tren sale, a qué destino y en qué andén?</small>
+      </div>
+    </div>
+    <div class="challenge-body">
+      <p class="instruction">Reproduce el anuncio con Gemini Live activo. Pídele que te explique qué escucha. Luego verifica tu respuesta.</p>
+      <div class="station-card" id="audioPlayer" onclick="playAnnouncement()">
+        <div class="station-img-wrap">
+          <img src="../public/images/station.webp" alt="Estación de Kioto · 京都駅" class="station-img">
+          <div class="station-overlay"></div>
+          <div class="station-hud">
+            <div class="station-badge">
+              <span class="station-dot" id="stationDot"></span>
+              京都駅 · Andén 5
+            </div>
+            <div class="station-announcement">
+              <div class="ann-label">アナウンス中</div>
+              <div class="ann-jp">まもなく、のぞみ２７号</div>
+              <div class="ann-jp">新大阪行きが参ります</div>
+            </div>
+          </div>
+          <button class="station-play-btn" aria-label="Reproducir anuncio">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="station-status" id="audioStatus">▶ &nbsp;PULSA PARA ESCUCHAR</div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="toggleAnswer('ans2')">
+        Revelar después de que Gemini responda
+      </button>
+      <div id="ans2" class="answer-box">
+        <span class="jp-answer">まもなく、のぞみ二十七号、新大阪行きが、五番線に参ります。</span>
+        <strong>Traducción:</strong> "En breve, el Nozomi número 27 con destino Shin-Osaka llegará al andén número cinco. Por favor, retírense de la línea amarilla."<br><br>
+        🚄 <strong>Tren:</strong> Nozomi 27 &nbsp;|&nbsp; 🏁 <strong>Destino:</strong> Shin-Osaka &nbsp;|&nbsp; 🚉 <strong>Andén:</strong> 5
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenge 3: Identify Images -->
+  <section class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-num">03</div>
+      <div class="challenge-title">
+        Identifica los lugares de Kioto
+        <small>Muéstrale cada imagen a Gemini Live y pregunta dónde es</small>
+      </div>
+    </div>
+    <div class="challenge-body">
+      <p class="instruction">Estas tres estampas ukiyo-e muestran lugares icónicos de Kioto. Selecciona una imagen para revelar su color y pídele a Gemini que identifique el lugar. ¡Pulsa de nuevo para deseleccionar!</p>
+
+      <div class="image-grid">
+        <div class="img-option" onclick="selectImage(this)" data-id="0">
+          <img src="../public/images/grid-a.webp" alt="Lugar de Kioto 1">
+          <div class="img-label">嵐山竹林</div>
+        </div>
+        <div class="img-option" onclick="selectImage(this)" data-id="1">
+          <img src="../public/images/grid-b.webp" alt="Lugar de Kioto 2">
+          <div class="img-label">五重塔</div>
+        </div>
+        <div class="img-option" onclick="selectImage(this)" data-id="2">
+          <img src="../public/images/grid-c.webp" alt="Lugar de Kioto 3">
+          <div class="img-label">伏見稲荷</div>
+        </div>
+      </div>
+
+      <button class="reveal-btn" onclick="toggleAnswer('ans3')">
+        Revelar después de que Gemini responda
+      </button>
+      <div id="ans3" class="answer-box">
+        <strong>嵐山竹林の道</strong> (Arashiyama Bamboo Grove) — El famoso camino entre cañas de bambú gigantes en Arashiyama, al oeste de Kioto. Sus sonidos fueron declarados patrimonio sonoro de Japón.<br><br>
+        <strong>五重塔</strong> (Gojū-no-tō) — Pagoda de cinco pisos, símbolo de la arquitectura budista japonesa. Esta estampa representa la pagoda de Tō-ji, el templo más alto de madera de Japón.<br><br>
+        <strong>伏見稲荷大社</strong> (Fushimi Inari Taisha) — El santuario shinto dedicado a Inari, dios del arroz. Sus miles de torii rojas en fila forman uno de los paisajes más fotográficos de Japón.
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    RetoIA · Día 04 &nbsp;·&nbsp; <span>京都</span> &nbsp;·&nbsp; Gemini Live Challenge
+    <div class="signature">
+      <div class="sig-line"></div>
+      <span class="sig-label">Concebido &amp; diseñado por</span>
+      <span class="sig-name">Vasyl Pavlyuchok</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// ── Canvas setup ──────────────────────────────────────────────────
+const canvas = document.getElementById('petal-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── Petals — mix of large+slow and small+many ─────────────────────
+const petals = [];
+
+function makePetal(large = false) {
+  if (large) {
+    // Large, slow, contemplative
+    const size = 14 + Math.random() * 18;
+    return {
+      x: Math.random() * W,
+      y: -size,
+      size,
+      speedY: 0.35 + Math.random() * 0.45,
+      speedX: (Math.random() - 0.5) * 0.3,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.012,
+      opacity: 0.55 + Math.random() * 0.35,
+      hue: 335 + Math.random() * 15,
+      sat: 60 + Math.random() * 20,
+      large: true,
+      wobble: Math.random() * 100,
+    };
+  } else {
+    // Small, quick, numerous
+    const size = 2.5 + Math.random() * 5;
+    return {
+      x: Math.random() * W,
+      y: -size,
+      size,
+      speedY: 0.8 + Math.random() * 1.4,
+      speedX: (Math.random() - 0.5) * 0.7,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.06,
+      opacity: 0.25 + Math.random() * 0.4,
+      hue: 340 + Math.random() * 25,
+      sat: 55 + Math.random() * 30,
+      large: false,
+      wobble: Math.random() * 100,
+    };
+  }
+}
+
+// 8 large + 45 small
+for (let i = 0; i < 8; i++) {
+  const p = makePetal(true);
+  p.y = Math.random() * H;
+  petals.push(p);
+}
+for (let i = 0; i < 45; i++) {
+  const p = makePetal(false);
+  p.y = Math.random() * H;
+  petals.push(p);
+}
+
+// Draw a realistic 5-petal sakura shape
+function drawSakuraPetal(p) {
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.angle);
+  ctx.globalAlpha = p.opacity;
+
+  if (p.large) {
+    // Draw a proper sakura petal (teardrop with notch at tip)
+    const s = p.size;
+    ctx.beginPath();
+    ctx.moveTo(0, -s);
+    ctx.bezierCurveTo(s * 0.6, -s * 0.6, s * 0.7, s * 0.4, 0, s * 0.9);
+    ctx.bezierCurveTo(-s * 0.7, s * 0.4, -s * 0.6, -s * 0.6, 0, -s);
+    const grad = ctx.createRadialGradient(0, -s * 0.2, 0, 0, 0, s);
+    grad.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, 92%, 1)`);
+    grad.addColorStop(1, `hsla(${p.hue - 5}, ${p.sat - 10}%, 75%, 0.6)`);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    // Subtle vein
+    ctx.beginPath();
+    ctx.moveTo(0, -s * 0.9);
+    ctx.lineTo(0, s * 0.7);
+    ctx.strokeStyle = `hsla(${p.hue - 10}, 40%, 70%, 0.25)`;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  } else {
+    // Small petals — simple ellipse, fast
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size * 0.45, p.size, 0, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, 88%, 1)`;
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+// ── Main animation loop ────────────────────────────────────────────
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw petals
+  petals.forEach((p, i) => {
+    p.y += p.speedY;
+    p.x += p.speedX + Math.sin((p.y + p.wobble) * (p.large ? 0.008 : 0.018)) * (p.large ? 0.6 : 0.9);
+    p.angle += p.spin;
+    const margin = p.size * 2;
+    if (p.y > H + margin) {
+      petals[i] = makePetal(p.large);
+    }
+    drawSakuraPetal(p);
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ── Image selection ───────────────────────────────────────────────
+function selectImage(el) {
+  const wasSelected = el.classList.contains('selected');
+  // Deselect all
+  document.querySelectorAll('.img-option').forEach(o => o.classList.remove('selected'));
+  // If wasn't selected, select it
+  if (!wasSelected) {
+    el.classList.add('selected');
+  }
+}
+
+// ── Answer toggle ─────────────────────────────────────────────────
+function toggleAnswer(id) {
+  const box = document.getElementById(id);
+  box.classList.toggle('visible');
+  const btn = box.previousElementSibling;
+  if (box.classList.contains('visible')) {
+    btn.textContent = '▲ Ocultar respuesta';
+  } else {
+    btn.textContent = 'Revelar después de que Gemini responda';
+  }
+}
+
+// ── Train announcement TTS ────────────────────────────────────────
+let speaking = false;
+function playAnnouncement() {
+  if (speaking) return;
+  if (!window.speechSynthesis) {
+    document.getElementById('audioStatus').innerHTML = 'NAVEGADOR NO COMPATIBLE CON AUDIO';
+    return;
+  }
+  const text = 'まもなく、のぞみ二十七号、新大阪行きが、五番線に参ります。危ないですので、黄色い線の内側にお下がりください。';
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.85;
+  utter.pitch = 1.05;
+  speaking = true;
+  document.getElementById('audioStatus').innerHTML = '◼ &nbsp;REPRODUCIENDO ANUNCIO...';
+  document.getElementById('stationDot').classList.add('playing');
+  utter.onend = () => {
+    speaking = false;
+    document.getElementById('audioStatus').innerHTML = '▶ &nbsp;PULSA PARA ESCUCHAR';
+    document.getElementById('stationDot').classList.remove('playing');
+  };
+  speechSynthesis.speak(utter);
+}
+</script>
+</body>
+</html>

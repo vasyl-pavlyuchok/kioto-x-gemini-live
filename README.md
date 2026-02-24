@@ -1,5 +1,18 @@
-# Firebase Studio
+# Kioto × Gemini Live — RetoIA Día 04
 
-This is a NextJS starter in Firebase Studio.
+Este proyecto es una experiencia interactiva diseñada para el RetoIA Día 04. Utiliza Gemini Live para ayudar a los usuarios a sumergirse en la cultura de Kioto a través de cuatro desafíos:
 
-To get started, take a look at src/app/page.tsx.
+1. **Leer · Traducir**: Traducir un menú de restaurante japonés.
+2. **Hablar · Pedir**: Practicar el pedido de comida en japonés.
+3. **Escuchar · Entender**: Comprender anuncios de la estación de tren de Kioto.
+4. **Ver · Identificar**: Identificar lugares icónicos de la ciudad.
+
+## Tecnologías
+
+- Next.js (App Router)
+- Tailwind CSS
+- Lucide React (Iconos)
+- Web Speech API (para simulaciones locales)
+- Gemini Live (vía integración externa del usuario)
+
+Desarrollado para el RetoIA por Vasyl Pavlyuchok.
