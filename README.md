@@ -11,8 +11,8 @@ Esta aplicación es una experiencia inmersiva diseñada para el **RetoIA Día 04
 
 ## Tecnologías Utilizadas
 - **Next.js 15** (App Router)
-- **Genkit** para integraciones de IA
-- **Tailwind CSS** para el diseño visual
+- **Genkit** para integraciones de IA con Gemini 2.5 Flash
+- **Tailwind CSS** para el diseño visual temático
 - **Lucide React** para la iconografía
 - **ShadCN UI** para componentes de interfaz profesional
 

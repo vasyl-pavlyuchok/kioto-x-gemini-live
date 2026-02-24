@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -40,8 +41,10 @@ export default function KiotoChallenge() {
     let W = 0, H = 0
 
     function resize() {
-      W = canvas!.width = window.innerWidth
-      H = canvas!.height = window.innerHeight
+      if (typeof window !== 'undefined') {
+        W = canvas!.width = window.innerWidth
+        H = canvas!.height = window.innerHeight
+      }
     }
     resize()
     window.addEventListener('resize', resize)
@@ -77,8 +80,8 @@ export default function KiotoChallenge() {
     }
 
     const petals: Petal[] = []
-    for (let i = 0; i < 8; i++) { const p = makePetal(true); p.y = Math.random() * window.innerHeight; petals.push(p) }
-    for (let i = 0; i < 45; i++) { const p = makePetal(false); p.y = Math.random() * window.innerHeight; petals.push(p) }
+    for (let i = 0; i < 8; i++) { const p = makePetal(true); p.y = Math.random() * H; petals.push(p) }
+    for (let i = 0; i < 45; i++) { const p = makePetal(false); p.y = Math.random() * H; petals.push(p) }
 
     function drawPetal(p: Petal) {
       ctx.save()
@@ -146,7 +149,7 @@ export default function KiotoChallenge() {
 
   function playAnnouncement() {
     if (speaking) return
-    if (!window.speechSynthesis) {
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
       setAudioStatus('NAVEGADOR NO COMPATIBLE CON AUDIO')
       return
     }
@@ -176,7 +179,6 @@ export default function KiotoChallenge() {
 
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
     if (!SR) {
-      // Fallback for unsupported browsers — simulate after 2 s
       setTimeout(() => {
         setSpeakPhase(type === 'order' ? 'cook-confirm' : 'cook-farewell')
       }, 2000)
@@ -222,14 +224,11 @@ export default function KiotoChallenge() {
 
   const isListening = speakPhase === 'listen-order' || speakPhase === 'listen-thanks'
 
-  // ── Render ──────────────────────────────────────────────────────
   return (
     <div className="kioto-page">
       <canvas ref={canvasRef} id="petal-canvas" />
 
       <div className="page-wrap">
-
-        {/* ── Header ── */}
         <header className="site-header">
           <span className="day-badge">RetoIA · Día 04</span>
           <h1>
@@ -253,7 +252,6 @@ export default function KiotoChallenge() {
           </nav>
         </header>
 
-        {/* ── Challenge 01: Menú ── */}
         <section id="c1" className="challenge">
           <span className="kanji-bg" aria-hidden="true">食</span>
           <div className="challenge-header">
@@ -282,7 +280,7 @@ export default function KiotoChallenge() {
               </div>
               <div className="menu-item">
                 <span className="jp-name">京野菜の炊き合わせ</span>
-                <span className="jp-sub">季節の野菜を丁寧に煮込んだ</span>
+                <span className="jp-sub">季節 de 野菜を丁寧に煮込んだ</span>
                 <span className="price">¥ 1,800</span>
               </div>
             </div>
@@ -298,12 +296,10 @@ export default function KiotoChallenge() {
           </div>
         </section>
 
-        {/* ── Section divider ── */}
         <div className="section-sep" aria-hidden="true">
           <span className="sep-line" /><span className="sep-kanji">声</span><span className="sep-line" />
         </div>
 
-        {/* ── Challenge 02: Pedir comida ── */}
         <section id="c2" className="challenge">
           <span className="kanji-bg" aria-hidden="true">言</span>
           <div className="challenge-header">
@@ -314,7 +310,6 @@ export default function KiotoChallenge() {
             <p className="challenge-statement">Llegas al mostrador.<br />Dos cocineros esperan tu pedido en japonés.</p>
             <p className="instruction">Activa Gemini Live para que te ayude a pronunciar. Cuando estés listo, pulsa el botón y habla.</p>
 
-            {/* Restaurant image */}
             <div className="restaurant-card">
               <div className="restaurant-img-wrap">
                 <Image
@@ -322,6 +317,7 @@ export default function KiotoChallenge() {
                   alt=""
                   fill
                   sizes="(max-width: 860px) 100vw, 860px"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
               <div className="restaurant-overlay" />
@@ -331,7 +327,6 @@ export default function KiotoChallenge() {
               </div>
             </div>
 
-            {/* Cheat sheet */}
             <div className="cheat-sheet">
               <div className="cheat-title">チートシート — Lo que debes decir</div>
               <div className="cheat-row">
@@ -346,7 +341,6 @@ export default function KiotoChallenge() {
               </div>
             </div>
 
-            {/* Recognition stage */}
             <div className={`speak-stage${speakPhase !== 'idle' ? ' active' : ''}`}>
               {speakPhase === 'idle' && (
                 <span className="speak-idle-hint">— Pulsa el botón cuando estés listo —</span>
@@ -385,7 +379,6 @@ export default function KiotoChallenge() {
               )}
             </div>
 
-            {/* Action buttons */}
             <div className="speak-actions">
               {speakPhase === 'idle' && (
                 <button className="speak-btn" onClick={() => startSpeakPhase('order')}>
@@ -416,12 +409,10 @@ export default function KiotoChallenge() {
           </div>
         </section>
 
-        {/* ── Section divider ── */}
         <div className="section-sep" aria-hidden="true">
           <span className="sep-line" /><span className="sep-kanji">春</span><span className="sep-line" />
         </div>
 
-        {/* ── Challenge 03: Anuncio de tren ── */}
         <section id="c3" className="challenge">
           <span className="kanji-bg" aria-hidden="true">旅</span>
           <div className="challenge-header">
@@ -439,6 +430,7 @@ export default function KiotoChallenge() {
                   fill
                   sizes="(max-width: 860px) 100vw, 860px"
                   priority
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
               <div className="station-overlay" />
@@ -473,12 +465,10 @@ export default function KiotoChallenge() {
           </div>
         </section>
 
-        {/* ── Section divider ── */}
         <div className="section-sep" aria-hidden="true">
           <span className="sep-line" /><span className="sep-kanji">花</span><span className="sep-line" />
         </div>
 
-        {/* ── Challenge 04: Identificar imágenes ── */}
         <section id="c4" className="challenge">
           <span className="kanji-bg" aria-hidden="true">景</span>
           <div className="challenge-header">
@@ -500,6 +490,7 @@ export default function KiotoChallenge() {
                     alt={img.label}
                     fill
                     sizes="(max-width: 600px) 100vw, 280px"
+                    style={{ objectFit: 'cover' }}
                   />
                   <div className="img-label">{img.label}</div>
                 </div>
@@ -516,7 +507,6 @@ export default function KiotoChallenge() {
           </div>
         </section>
 
-        {/* ── Footer ── */}
         <footer className="site-footer">
           RetoIA · Día 04 &nbsp;·&nbsp; <span>京都</span> &nbsp;·&nbsp; Gemini Live Challenge
           <div className="signature">
@@ -525,7 +515,6 @@ export default function KiotoChallenge() {
             <span className="sig-name">Vasyl Pavlyuchok</span>
           </div>
         </footer>
-
       </div>
     </div>
   )
