@@ -13,10 +13,12 @@ type Petal = {
 
 type SpeakPhase = 'idle' | 'listen-order' | 'cook-confirm' | 'listen-thanks' | 'cook-farewell'
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+
 const GRID_IMAGES = [
-  { src: '/images/grid-a.webp', label: '嵐山竹林' },
-  { src: '/images/grid-b.webp', label: '五重塔' },
-  { src: '/images/grid-c.webp', label: '伏見稲荷' },
+  { src: `${BASE}/images/grid-a.webp`, label: '嵐山竹林' },
+  { src: `${BASE}/images/grid-b.webp`, label: '五重塔' },
+  { src: `${BASE}/images/grid-c.webp`, label: '伏見稲荷' },
 ]
 
 export default function KiotoChallenge() {
@@ -312,7 +314,7 @@ export default function KiotoChallenge() {
             <div className="restaurant-card">
               <div className="restaurant-img-wrap">
                 <Image
-                  src="/images/Gemini_Section_new.png"
+                  src={`${BASE}/images/Gemini_Section_new.png`}
                   alt=""
                   fill
                   sizes="(max-width: 860px) 100vw, 860px"
@@ -424,7 +426,7 @@ export default function KiotoChallenge() {
             <div className="station-card" onClick={playAnnouncement}>
               <div className="station-img-wrap">
                 <Image
-                  src="/images/station2.webp"
+                  src={`${BASE}/images/station2.webp`}
                   alt="Estación de tren japonesa"
                   fill
                   sizes="(max-width: 860px) 100vw, 860px"
