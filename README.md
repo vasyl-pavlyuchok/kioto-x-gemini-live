@@ -1,3 +1,4 @@
+
 # Kioto × Gemini Live — RetoIA Día 04
 
 Esta aplicación es una experiencia inmersiva diseñada para el **RetoIA Día 04**. Utiliza las capacidades de visión y voz de **Gemini Live** para ayudar a los usuarios a navegar por situaciones cotidianas en Kioto, Japón.
