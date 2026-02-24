@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -265,11 +264,11 @@ export default function KiotoChallenge() {
               <div className="menu-title">本日のお献立</div>
               <div className="menu-item">
                 <span className="jp-name">湯豆腐</span>
-                <span className="jp-sub">冬の京都 de 定番料理</span>
+                <span className="jp-sub">冬o京都 de 定番料理</span>
                 <span className="price">¥ 1,200</span>
               </div>
               <div className="menu-item">
-                <span className="jp-name">鱧の天ぷら</span>
+                <span className="jp-name">鱧o天ぷら</span>
                 <span className="jp-sub">夏限定・揚げたて</span>
                 <span className="price">¥ 2,400</span>
               </div>
@@ -279,8 +278,8 @@ export default function KiotoChallenge() {
                 <span className="price">¥ 680</span>
               </div>
               <div className="menu-item">
-                <span className="jp-name">京野菜の炊き合わせ</span>
-                <span className="jp-sub">季節の野菜を丁寧に煮込んだ</span>
+                <span className="jp-name">京野菜o炊き合わせ</span>
+                <span className="jp-sub">季節o野菜o丁寧に煮込んだ</span>
                 <span className="price">¥ 1,800</span>
               </div>
             </div>
@@ -289,9 +288,9 @@ export default function KiotoChallenge() {
             </button>
             <div className={`answer-box${answersOpen.has('ans1') ? ' visible' : ''}`}>
               <strong>湯豆腐</strong> (yu-dōfu) — Tofu caliente en caldo dashi, plato icónico de la cocina kaiseki de Kioto.<br /><br />
-              <strong>鱧の天ぷら</strong> (hamo no tempura) — Anguila de mar rebozada, especialidad del verano en Kioto.<br /><br />
+              <strong>鱧o天ぷら</strong> (hamo no tempura) — Anguila de mar rebozada, especialidad del verano en Kioto.<br /><br />
               <strong>抹茶プリン</strong> (matcha purin) — Flan cremoso de té verde matcha, un postre moderno muy popular.<br /><br />
-              <strong>京野菜の炊き合わせ</strong> (kyōyasai no takiawase) — Verduras de Kioto cocinadas lentamente en caldo, plato de temporada.
+              <strong>京野菜o炊き合わせ</strong> (kyōyasai no takiawase) — Verduras de Kioto cocinadas lentamente en caldo, plato de temporada.
             </div>
           </div>
         </section>
@@ -500,7 +499,7 @@ export default function KiotoChallenge() {
               {answersOpen.has('ans4') ? '▲ Ocultar respuesta' : '▶ Revelar después de que Gemini responda'}
             </button>
             <div className={`answer-box${answersOpen.has('ans4') ? ' visible' : ''}`}>
-              <strong>嵐山竹林の道</strong> (Arashiyama Bamboo Grove) — El famoso camino entre cañas de bambú gigantes en Arashiyama, al oeste de Kioto. Sus sonidos fueron declarados patrimonio sonoro de Japón.<br /><br />
+              <strong>嵐山竹林o道</strong> (Arashiyama Bamboo Grove) — El famoso camino entre cañas de bambú gigantes en Arashiyama, al oeste de Kioto. Sus sonidos fueron declarados patrimonio sonoro de Japón.<br /><br />
               <strong>五重塔</strong> (Gojū-no-tō) — Pagoda de cinco pisos, símbolo de la arquitectura budista japonesa. Esta estampa representa la pagoda de Tō-ji, el templo más alto de madera de Japón.<br /><br />
               <strong>伏見稲荷大社</strong> (Fushimi Inari Taisha) — El santuario shinto dedicado a Inari, dios del arroz. Sus miles de torii rojas en fila forman uno de los paisajes más fotográficos de Japón.
             </div>
