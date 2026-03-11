@@ -1,6 +1,8 @@
 
 # Kioto × Gemini Live — RetoIA Día 04
 
+Página web accesible en este enlace: https://vasyl-pavlyuchok.github.io/kioto-x-gemini-live/
+
 Esta aplicación es una experiencia inmersiva diseñada para el **RetoIA Día 04**. Utiliza las capacidades de visión y voz de **Gemini Live** para ayudar a los usuarios a navegar por situaciones cotidianas en Kioto, Japón.
 
 ## Los 4 Retos
